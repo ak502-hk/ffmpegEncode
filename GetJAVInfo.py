@@ -110,7 +110,12 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
                 f.write(cover_response.content)
 
             #Output to text file
-            f_out.write(f'{video_id} {video_title}\n')
+            f_out.write(f'{video_id}')
+            third_element = "-"+file_name.split("-")[2]
+            if "-C" in third_element:
+                f_out.write(f' [中文字幕] {video_title} \n')
+            else:
+                f_out.write(f' {video_title} \n')
             f_out.write("".join(video_cast_names))            
             f_out.write(f'{video_maker}\n')
             f_out.write(f'{video_label}\n')
@@ -119,7 +124,6 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
             for genre in genres:
                 f_out.write(genre+' ')
             f_out.write(f'#AK網友 \n')
-            third_element = "-"+file_name.split("-")[2]
             if "-C" in third_element:
                 f_out.write(f'#中文字幕\n')
             else:
