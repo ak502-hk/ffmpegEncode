@@ -54,21 +54,25 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
 
             video_date = result_soup.find('div', {'id': 'video_date'})	
 
-            # Find the element that contains the video cast
-            cast_element = result_soup.find("div", {"id": "video_cast"})
-            # Extract the video cast from the element and remove the first value
-            video_cast = cast_element.text.strip().split("\n")[1:]            
+            # find the div element with id 'video_cast'
+            video_cast_div = result_soup.find('div', {'id': 'video_cast'})
 
-            # Format the video cast by adding "#" in front of each name
-            cast_list = []
-            for name in video_cast:
-                name = name.strip()
-                if not name.startswith("("):
-                    formatted_name = "#" + name.replace(" ", "\n#") + "\n"
-                    cast_list.append(formatted_name)
+            # find all the span elements with class 'cast'
+            cast_spans = video_cast_div.find_all('span', {'class': 'cast'})
+
+            # extract the text from each span element and wrap aliases in parentheses
+            video_cast_names = []
+
+            for cast_span in cast_spans:
+                name = cast_span.text.strip().replace(' ', ' #')
+                if cast_span.find('span', {'class': 'alias'}):
+                    alias = cast_span.find('span', {'class': 'alias'}).text.strip()
+                    name = name.replace(alias, ' (#' + alias ) + ")"
+                    name = name.replace(' # ', ' ')
+                video_cast_names.append('#' + name + "\n")
 
             # Add a newline character at the end of the formatted video cast
-            cast_list.append("\n")
+            video_cast_names.append("\n")
 
             maker_id_element = result_soup.find("div", {"id": "video_maker"})
             video_maker = maker_id_element.text.strip()
@@ -102,7 +106,7 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
 
             #Output to text file
             f_out.write(f'{video_id} {video_title}\n')
-            f_out.write("".join(cast_list))            
+            f_out.write("".join(video_cast_names))            
             f_out.write(f'{video_maker}\n')
             f_out.write(f'{video_label}\n')
             # Write the genres to a text file
