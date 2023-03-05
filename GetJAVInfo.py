@@ -95,7 +95,7 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
             genres = []
             for genre_span in genre_spans:
                 genre = genre_span.find('a').text
-                if genre not in ["薄馬賽克", "數位馬賽克"]:
+                if genre not in ["薄馬賽克", "數位馬賽克", "藍光"]:
                     genres.append(genre)                 
 
             # Add a "#" symbol in front of each genre
