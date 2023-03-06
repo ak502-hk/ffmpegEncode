@@ -91,11 +91,21 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
             maker_id_element = result_soup.find("div", {"id": "video_maker"})
             video_maker = maker_id_element.text.strip()
             video_maker = video_maker.replace('\n', ' ')
-            video_maker = video_maker.replace(' ', " #")
+
+            # Check if video_maker contains "E-BODY"
+            if "E-BODY" in video_maker:
+                video_maker = video_maker.replace("E-BODY", "EBODY")
+
+            video_maker = video_maker.replace(' ', ' #')
 
             label_id_element = result_soup.find("div", {"id": "video_label"})
             video_label = label_id_element.text.strip()
             video_label = video_label.replace('\n', ' ')
+
+            # Check if video_label contains "E-BODY"
+            if "E-BODY" in video_label:
+                video_label = video_label.replace("E-BODY", "EBODY")
+
             video_label = video_label.replace(' ', " #")
 
             # Find the HTML element that contains the list of genres
@@ -105,7 +115,7 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
             for genre_span in genre_spans:
                 genre = genre_span.find('a').text
                 if genre not in ["薄馬賽克", "數位馬賽克", "藍光"]:
-                    genres.append(genre)                 
+                    genres.append(genre)
 
             # Add a "#" symbol in front of each genre
             genres = ["#" + genre for genre in genres]
