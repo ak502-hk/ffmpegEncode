@@ -12,12 +12,16 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
 
     # Loop through all files in the folder
     for file_name in os.listdir(folder_path):
-        if file_name.endswith('_encoded.mp4'):
-            # Extract first 8 characters from the filename
-            # video_id = file_name[:8]
+        #if file_name.endswith('_encoded.mp4'):
+        if file_name.endswith('.mp4'):
             first_dash_pos = file_name.index("-")
-            second_dash_pos = file_name.index("-", first_dash_pos + 1)
-            video_id = file_name[:second_dash_pos]
+            try:
+                second_dash_pos = file_name.index("-", first_dash_pos + 1)
+                video_id = file_name[:second_dash_pos]
+            except ValueError:
+                # remove the .mp4 extension from the filename
+                filename_without_extension = os.path.splitext(file_name)[0]
+                video_id = filename_without_extension
             print(video_id)
             file_path = os.path.join(folder_path, file_name)
             clip = VideoFileClip(file_path)
@@ -116,9 +120,12 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
 
             #Output to text file
             f_out.write(f'{video_id}')
-            third_element = "-"+file_name.split("-")[2]
-            if "-C" in third_element:
-                f_out.write(f' [中文字幕] {video_title} \n')
+            if len(file_name.split("-")) > 2:
+                third_element = "-"+file_name.split("-")[2]
+                if "-C" in third_element:
+                    f_out.write(f' [中文字幕] {video_title} \n')
+                else:
+                    f_out.write(f' {video_title} \n')
             else:
                 f_out.write(f' {video_title} \n')
             f_out.write("".join(video_cast_names))            
@@ -129,8 +136,11 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
             for genre in genres:
                 f_out.write(genre+' ')
             f_out.write(f'#AK網友 ')
-            if "-C" in third_element:
-                f_out.write(f'#中文字幕\n')
+            if len(file_name.split("-")) > 2:
+                if "-C" in third_element:
+                    f_out.write(f'#中文字幕\n')
+                else:
+                    f_out.write(f'\n')
             else:
                 f_out.write(f'\n')
             f_out.write(f'👉🏼 @galaxyjj ❤️ 宇宙AV谷 ❤️\n')
