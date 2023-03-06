@@ -68,7 +68,15 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
                 print(f"Could not find orgTitle for {file_name}. Skipping this file...")
                 continue
 
-            video_date = result_soup.find('div', {'id': 'video_date'})	
+
+            video_director_element = result_soup.find('div', {'id': 'video_director'})	
+            video_director = video_director_element.text.strip()
+            video_director = video_director.replace('\n', ' ')  
+            video_director = video_director.replace(' ', ' #')          
+
+            video_date_element = result_soup.find('div', {'id': 'video_date'})	
+            video_date = video_date_element.text.strip()
+            video_date = video_date.replace('\n', ' ')
 
             # find the div element with id 'video_cast'
             video_cast_div = result_soup.find('div', {'id': 'video_cast'})
@@ -141,6 +149,8 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
             else:
                 f_out.write(f' {video_title} \n')
             f_out.write("".join(video_cast_names))            
+            f_out.write(f'{video_date}\n')
+            f_out.write(f'{video_director}\n')
             f_out.write(f'{video_maker}\n')
             f_out.write(f'{video_label}\n')
             f_out.write(f'#{height}p'+' ')
