@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from moviepy.editor import VideoFileClip
 
-folder_path = r'S:\Temp\Upload'
+folder_path = r'S:\Temp\test'
 output_file = '- video_info.txt'
 
 # Open the output file for writing
@@ -23,9 +23,11 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
                 filename_without_extension = os.path.splitext(file_name)[0]
                 video_id = filename_without_extension
             print(video_id)
-            file_path = os.path.join(folder_path, file_name)
-            clip = VideoFileClip(file_path)
-            width, height = clip.size
+            
+            
+            #file_path = os.path.join(folder_path, file_name)
+            #clip = VideoFileClip(file_path)
+            #width, height = clip.size
 
             # Construct the search URL for Javlibrary.com
             search_url = f'https://www.javlibrary.com/tw/vl_searchbyid.php?keyword={video_id}'
@@ -92,9 +94,9 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
             video_maker = maker_id_element.text.strip()
             video_maker = video_maker.replace('\n', ' ')
 
-            # Check if video_maker contains "E-BODY"
-            if "E-BODY" in video_maker:
-                video_maker = video_maker.replace("E-BODY", "EBODY")
+            # Check if video_maker contains "-"
+            if "-" in video_maker:
+                video_maker = video_maker.replace("-", "")
 
             video_maker = video_maker.replace(' ', ' #')
 
@@ -102,9 +104,9 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
             video_label = label_id_element.text.strip()
             video_label = video_label.replace('\n', ' ')
 
-            # Check if video_label contains "E-BODY"
-            if "E-BODY" in video_label:
-                video_label = video_label.replace("E-BODY", "EBODY")
+            # Check if video_label contains "-"
+            if "-" in video_label:
+                video_label = video_label.replace("-", "")
 
             video_label = video_label.replace(' ', " #")
 
