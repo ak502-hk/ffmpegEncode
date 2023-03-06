@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from moviepy.editor import VideoFileClip
 
-folder_path = r'S:\Temp\test'
+folder_path = r'S:\Temp\Upload'
 output_file = '- video_info.txt'
 
 # Open the output file for writing
@@ -25,9 +25,9 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
             print(video_id)
             
             
-            #file_path = os.path.join(folder_path, file_name)
-            #clip = VideoFileClip(file_path)
-            #width, height = clip.size
+            file_path = os.path.join(folder_path, file_name)
+            clip = VideoFileClip(file_path)
+            width, height = clip.size
 
             # Construct the search URL for Javlibrary.com
             search_url = f'https://www.javlibrary.com/tw/vl_searchbyid.php?keyword={video_id}'
