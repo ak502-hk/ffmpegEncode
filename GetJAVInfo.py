@@ -123,10 +123,10 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
             # Write the genres to a text file
             for genre in genres:
                 f_out.write(genre+' ')
-            f_out.write(f'#AK網友 \n')
+            f_out.write(f'#AK網友 ')
             if "-C" in third_element:
                 f_out.write(f'#中文字幕\n')
             else:
-                f_out.write(f'')
+                f_out.write(f'\n')
             f_out.write(f'👉🏼 @galaxyjj ❤️ 宇宙AV谷 ❤️\n')
             f_out.write('\n\n')
