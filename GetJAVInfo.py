@@ -128,5 +128,5 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
                 f_out.write(f'#中文字幕\n')
             else:
                 f_out.write(f'')
-            f_out.write(f'👉🏼 @galaxyjj ❤️ 宇宙channel - AV谷 ❤️\n')
+            f_out.write(f'👉🏼 @galaxyjj ❤️ 宇宙AV谷 ❤️\n')
             f_out.write('\n\n')
