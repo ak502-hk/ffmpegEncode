@@ -53,9 +53,14 @@ with open(os.path.join(folder_path, output_file), 'w', encoding='utf-8') as f_ou
 
             # Parse the HTML response and extract the required video information
             result_soup = BeautifulSoup(result_response.content, 'html.parser')
-            orgTitle = result_soup.find('h3', {'class': 'post-title text'}).text.strip()
-            video_id = orgTitle.split(" ", 1)[0]
-            video_title = orgTitle.split(" ", 1)[1]
+
+            try:
+                orgTitle = result_soup.find('h3', {'class': 'post-title text'}).text.strip()
+                video_id = orgTitle.split(" ", 1)[0]
+                video_title = orgTitle.split(" ", 1)[1]
+            except AttributeError:
+                print(f"Could not find orgTitle for {file_name}. Skipping this file...")
+                continue
 
             video_date = result_soup.find('div', {'id': 'video_date'})	
 
