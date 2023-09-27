@@ -1,4 +1,5 @@
 @echo off
+REM This batch file is to encode the mp4 file to 2GB fize in 720p format 
 setlocal enabledelayedexpansion
 
 set "input_folder=S:\temp"
